@@ -6,7 +6,7 @@
 例如在空中寫「3」，畫面會顯示 **You wrote 3**，按下 **Start**，手臂就來回動 3 次。
 For example, write "3" in the air. The screen shows **You wrote 3**. Press **Start** and the arm moves 3 times.
 
-![程式畫面 App screen: "You wrote 10"](docs/images/app-result.png)
+![實際使用畫面 Real use: "You wrote 10"](docs/images/app-real.jpg)
 
 這個專案是用 **ROS 2（Jazzy 版）** 做的，適合拿來認識「ROS 怎麼把鏡頭、辨識、手臂串在一起」。
 This project is built with **ROS 2 (Jazzy)**. It is a good way to learn how ROS connects a camera, a recognizer and a robot arm.
