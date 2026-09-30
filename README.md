@@ -47,7 +47,7 @@
 按右上角綠色 **Code → Download ZIP** 解壓縮，或用 git：
 
 ```bash
-git clone https://github.com/clchrf/air-digits-ros2-arm.git
+git clone https://github.com/clchrf/ntu-robotics-2026-robotarm-air-digits.git
 ```
 
 ### 步驟 2：安裝 Windows 端的 Python 套件 🪟
