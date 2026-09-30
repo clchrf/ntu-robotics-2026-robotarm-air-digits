@@ -6,6 +6,11 @@
 例如在空中寫「3」，畫面會顯示 **You wrote 3**，按下 **Start**，手臂就來回動 3 次。
 For example, write "3" in the air. The screen shows **You wrote 3**. Press **Start** and the arm moves 3 times.
 
+![示範：寫 2，手臂動 2 下 Demo: write 2, the arm moves 2 times](docs/images/demo.gif)
+
+*示範影片：在空中寫「2」→ 程式認出 2 → 按 Start → 手臂動 2 下（1.2 倍速）*
+*Demo: write "2" in the air → the app reads 2 → press Start → the arm moves 2 times (1.2× speed)*
+
 ![實際使用畫面 Real use: "You wrote 10"](docs/images/app-real.jpg)
 
 這個專案是用 **ROS 2（Jazzy 版）** 做的，適合拿來認識「ROS 怎麼把鏡頭、辨識、手臂串在一起」。
