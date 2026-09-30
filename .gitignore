@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# colcon（在 WSL 的 ~/digit_arm_ws 建置，不在這裡；以防萬一）
+build/
+install/
+log/
+
+# 本機測試紀錄（筆跡座標、截圖），不上傳
+artifacts/
+
+# PlatformIO
+.pio/

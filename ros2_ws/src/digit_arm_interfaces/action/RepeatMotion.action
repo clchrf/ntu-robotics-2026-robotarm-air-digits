@@ -1,0 +1,17 @@
+# 目標：重複固定的小幅動作 count 次（出去再回到起點才算一下）
+int32 count
+# 必須與最新一次成功辨識的筆跡相同，避免誤用舊結果
+uint32 ink_id
+---
+# succeeded / canceled / aborted
+string outcome
+int32 completed
+int32 requested
+bool simulated
+string message
+---
+int32 completed
+int32 total
+# out（出發）/ dwell（停留）/ return（返回起點）/ cancel_return（取消後返回起點）/ pause（兩下之間）
+string phase
+bool simulated

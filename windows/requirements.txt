@@ -1,0 +1,6 @@
+# Windows 端需要的 Python 套件（鏡頭與序列埠小程式用）
+# 安裝：python -m pip install -r windows\requirements.txt
+opencv-python>=4.8
+mediapipe>=0.10.14
+pyserial>=3.5
+numpy>=1.26

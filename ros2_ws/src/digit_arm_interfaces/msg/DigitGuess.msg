@@ -1,0 +1,11 @@
+# 單一數字的辨識結果
+string label
+float32 confidence
+# 第二可能的答案（供失敗訊息使用）
+string runner_up
+# 這個數字在筆跡中的外框（鏡像後正規化座標）
+float32 x_min
+float32 x_max
+float32 y_min
+float32 y_max
+int32[] stroke_indices

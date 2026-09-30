@@ -1,0 +1,7 @@
+# 固定換行：Linux（WSL）要執行的檔案一律 LF，Windows 批次檔用 CRLF
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.task binary
+*.png binary
+*.jpg binary

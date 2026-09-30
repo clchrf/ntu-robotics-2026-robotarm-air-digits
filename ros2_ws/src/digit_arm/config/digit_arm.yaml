@@ -1,0 +1,62 @@
+# 空中寫數字 — 可調參數。修改後重新 launch 即可（使用 --symlink-install 建置，不必重新 colcon build）。
+/**:
+  ros__parameters:
+    # 最大動作次數：辨識節點與動作節點都會檢查（launch 參數 max_count 可覆寫）
+    max_count: 20
+
+hand_gesture_node:
+  ros__parameters:
+    camera_backend: windows      # windows（WSL 中使用 Windows 筆電鏡頭）/ local / synthetic
+    windows_python: python.exe   # 已安裝 opencv-python、mediapipe 的 Windows Python
+    camera_index: 0
+    width: 640
+    height: 480
+    fps: 30
+    fist_hold_s: 0.8             # 握拳要維持多久才送出
+    down_frames: 3               # 連續幾格「只伸食指」才下筆
+    up_frames: 3                 # 連續幾格其他手勢才抬筆
+    lost_timeout_s: 0.35         # 手消失多久算追蹤中斷
+    synthetic_text: "3"          # 只在 camera_backend: synthetic 時使用
+
+digit_recognizer_node:
+  ros__parameters:
+    max_digits: 3
+    min_confidence: 0.70         # 每個數字的最低信心，低於此值就請使用者重寫
+
+motion_executor_node:
+  ros__parameters:
+    mode: simulation             # simulation（預設，不動手臂）/ hardware
+    # ---- 實體手臂（movearm/arm_controller/arm_controller.ino 協定）----
+    port: "win:auto"             # win:auto / win:COM5（Windows COM），或 /dev/ttyUSB0（usbipd 轉進 WSL）
+    baud: 115200                 # arm_controller.ino 的 Serial.begin(115200)
+    windows_python: python.exe
+    # 每一下的小幅動作：從 HOME 讓一軸轉 motion_delta_deg 度再回到 HOME。
+    # 由使用者確認後填寫（清空則實體模式會拒絕連線，也不會開啟序列埠）。
+    #   motion_joint: base / arm / forearm（對應 movearm 介面的 Base / Arm / Forearm）
+    #   大臂、前臂在 movearm 介面的範圍從 0 開始，只能填正值；角度上限見 max_delta_deg。
+    motion_joint: ""             # 舊的單軸設定；下方 motion_*_deg 有值時不使用
+    motion_delta_deg: 0.0
+    # 2026-09-30 依 Desktop/movearm_wall.json 的繪圖校正點 (Base 0, Arm 19, Forearm 15)：
+    # 這是手臂實際到過的姿勢。每一下大臂、前臂同時轉出再回到起點。
+    motion_base_deg: 0.0
+    motion_arm_deg: 19.0
+    motion_forearm_deg: 15.0
+    allow_beyond_movearm_limits: false   # 目前角度都在 movearm 範圍內，不需要開
+    max_delta_deg: 90.0          # 軟體上限（不是已驗證的安全範圍）
+    # 平滑移動：韌體沒有加減速，收到目標就以約 94°/s 從靜止起跑，前臂有負載時會失步、原地抖。
+    # 改由電腦沿平滑曲線分段送點，每點最多 max_step_deg（沿用 robot_draw 驗證過的 0.25°）。
+    smooth_motion: false         # 使用者實測：一次送終點（不拆小段）的感覺比較好
+    stream_hz: 125.0             # 每秒送幾個中間點
+    max_step_deg: 0.25           # 每個指令最多走幾度（約 2 步）；變大會比較快，但容易失步
+    max_speed_deg_s: 25.0        # 最高速度上限；實際也受 max_step_deg × stream_hz 限制
+    # 板子上韌體的速度曲線（movearm/arm_controller/arm_controller.ino 加減速版的 MAX_SPEED_DEG_S / ACCEL_DEG_S2）。
+    # 用來預估時間與逾時；若板子上仍是原版韌體，兩者都填 0。
+    firmware_max_speed_deg_s: 60.0
+    firmware_accel_deg_s2: 120.0
+    dwell_s: 0.3                 # 到達後停留（秒）
+    pause_s: 0.25                # 兩下之間（秒）
+    boot_timeout_s: 5.0          # 等待控制器「System Ready」的時間
+    auto_connect: false          # true = 啟動就連線（手臂仍必須已在 HOME）
+    # ---- 模擬模式（只影響模擬計時與顯示）----
+    sim_joint: base
+    sim_delta_deg: 10.0
